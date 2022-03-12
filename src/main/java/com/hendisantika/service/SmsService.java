@@ -1,5 +1,8 @@
 package com.hendisantika.service;
 
+import com.hendisantika.model.SmsRequest;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +23,10 @@ public class SmsService {
     @Autowired
     public SmsService(TwilioProperties twilioProperties) {
         this.twilioProperties = twilioProperties;
+    }
+
+    public String sendSms(SmsRequest smsRequest) {
+        Message message = Message.creator(new PhoneNumber(smsRequest.getNumber()), new PhoneNumber(twilioProperties.getFromNumber()), smsRequest.getMessage()).create();
+        return message.getStatus().toString();
     }
 }
