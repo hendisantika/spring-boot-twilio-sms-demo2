@@ -1,9 +1,13 @@
 package com.hendisantika.controller;
 
+import com.hendisantika.model.SmsRequest;
 import com.hendisantika.service.SmsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -26,5 +30,14 @@ public class TwilioController {
     @GetMapping
     public String homePage() {
         return "index";
+    }
+
+    @PostMapping("/sendmessage")
+    public ResponseEntity<Object> sendMessage(SmsRequest smsRequest) {
+        String status = smsService.sendSms(smsRequest);
+        if ("sent".equals(status) || "queued".equals(status)) {
+            return new ResponseEntity<Object>("sent successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<Object>("failed to send message", HttpStatus.NOT_FOUND);
     }
 }
