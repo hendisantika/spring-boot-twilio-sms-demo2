@@ -7,3 +7,9 @@
 3. Replace Twilio Account with your own credentials on application.yml
 4. Run the application: `mvn clean spring-boot:run`
 5. Open your favorite browser: http://localhost:8080
+
+### Image Screen shot
+
+SMS Page
+
+![SMS Page](img/home.png "SMS Page")
